@@ -1,7 +1,7 @@
 import flet as ft
-from src.config import theme
-from src.interface.home import HomePage
-from src.utils.path import resourcePath
+from src.Config import theme
+from src.Interface.home import HomePage
+from src.Utils.path import resourcePath
 
 def main(page: ft.Page):
     th = theme.aplicar_theme(page)
