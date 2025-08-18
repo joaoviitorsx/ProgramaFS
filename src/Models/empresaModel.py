@@ -8,4 +8,3 @@ class Empresa(Base):
     id = Column(Integer, primary_key=True)
     cnpj = Column(CHAR(14), unique=True, nullable=False)
     razao_social = Column(String(100), nullable=False)
-    ativo = Column(Boolean, default=True)
