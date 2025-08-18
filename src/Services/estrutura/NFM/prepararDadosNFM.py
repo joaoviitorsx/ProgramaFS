@@ -1,17 +1,17 @@
 from src.Utils.registroValidacao import parseDecimal
 from datetime import datetime
 
-def formatar_data(data_obj):
+def formatarData(data_obj):
     return data_obj.strftime("%Y%m%d") if data_obj else ""
 
-def preparar_dados_nfm(c100, c170=None, participante=None):
+def prepararDadosNFM(c100, c170=None, participante=None):
     cod_part = c100.cod_part
     operacao = "E" if c100.ind_oper == "0" else "S"
     especie = c100.cod_mod or "NFE"
     tipo = c100.ind_emit or "S"
     numero = c100.num_doc.zfill(9) if c100.num_doc else ""
-    data_emissao = formatar_data(c100.dt_doc)
-    data_entrada = formatar_data(c100.dt_e_s)
+    data_emissao = formatarData(c100.dt_doc)
+    data_entrada = formatarData(c100.dt_e_s)
     vl_merc = parseDecimal(c100.vl_merc)
     vl_doc = parseDecimal(c100.vl_doc)
     chave = c100.chv_nfe or ""

@@ -3,7 +3,7 @@ from src.Models.c100Model import RegistroC100
 from src.Models.c170Model import RegistroC170
 from src.Models._0150Model import Registro0150
 from src.Services.estrutura.NFM.builderLinhaNFM import criarLinhaNFM
-from src.Services.estrutura.NFM.prepararDadosNFM import preparar_dados_nfm
+from src.Services.estrutura.NFM.prepararDadosNFM import prepararDadosNFM
 
 def exportarNFM(empresa_id: int, periodo: str) -> list[str]:
     session = SessionLocal()
@@ -29,7 +29,7 @@ def exportarNFM(empresa_id: int, periodo: str) -> list[str]:
                 cod_part=c100.cod_part
             ).first()
 
-            dados = preparar_dados_nfm(c100, c170, participante)
+            dados = prepararDadosNFM(c100, c170, participante)
             campos = criarLinhaNFM(dados)
             linha = "|" + "|".join(campos) + "|"
             linhas.append(linha)

@@ -2,7 +2,7 @@ from src.Config.Database.db import SessionLocal
 from src.Models.c190Model import RegistroC190
 from src.Models.empresaModel import EmpresaModel
 from src.Services.estrutura.INM.builderLinhaINM import criarLinhaINM
-from src.Services.estrutura.INM.prepararDadosINM import preparar_dados_inm
+from src.Services.estrutura.INM.prepararDadosINM import prepararDadosINM
 
 def exportarINM(empresa_id: int, periodo: str) -> list[str]:
     session = SessionLocal()
@@ -19,7 +19,7 @@ def exportarINM(empresa_id: int, periodo: str) -> list[str]:
         ).all()
 
         for r in registros:
-            dados = preparar_dados_inm(r, uf_empresa)
+            dados = prepararDadosINM(r, uf_empresa)
             campos = criarLinhaINM(dados)
             linha = "|" + "|".join(campos) + "|"
             linhas.append(linha)

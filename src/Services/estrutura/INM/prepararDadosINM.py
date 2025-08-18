@@ -1,6 +1,6 @@
 from src.Utils.registroValidacao import parseDecimal
 
-def preparar_dados_inm(c190, uf_destino: str) -> dict:
+def prepararDadosINM(c190, uf_destino: str) -> dict:
     vl_bc_icms = parseDecimal(c190.vl_bc_icms)
     vl_icms = parseDecimal(c190.vl_icms)
     cfop = c190.cfop or ""
