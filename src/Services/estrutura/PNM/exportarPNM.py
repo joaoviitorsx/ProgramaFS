@@ -1,5 +1,6 @@
-from src.Models.c170Model import RegistroC170
 from src.Config.Database.db import SessionLocal
+from src.Models.c170Model import RegistroC170
+from src.Services.estrutura.PNM.prepararDadosPNM import preparar_dados_pnm
 from src.Services.estrutura.PNM.builderLinhaPNM import criarLinhaPNM
 
 def exportarPNM(empresa_id: int, periodo: str) -> list[str]:
@@ -14,7 +15,8 @@ def exportarPNM(empresa_id: int, periodo: str) -> list[str]:
         ).all()
 
         for r in registros:
-            campos = criarLinhaPNM(r)
+            dados = preparar_dados_pnm(r)
+            campos = criarLinhaPNM(dados)
             linha = "|" + "|".join(campos) + "|"
             linhas.append(linha)
 
