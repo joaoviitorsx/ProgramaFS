@@ -1,10 +1,10 @@
 from src.Models._0200Model import Registro0200
 from src.Config.Database.db import SessionLocal
-from Utils.registroValidacao import parseDecimal
+from src.Utils.registroValidacao import parseDecimal
 
-#|0200|00000000000002|FAR TRIGO D.BENTA C/FERMENTO 1KG|||UN|99|11010010||11|||1704418|
+# |0200|00000000000002|FAR TRIGO D.BENTA C/FERMENTO 1KG|||UN|99|11010010||11|||1704418|
 
-def processar0200(campos):
+def processar0200(campos, empresa_id: int, periodo: str):
     if len(campos) < 14:
         print(f"⚠️ Linha REG 0200 malformada: {campos}")
         return
@@ -25,6 +25,8 @@ def processar0200(campos):
             cod_list=campos[11] if campos[11] else None,
             aliq_icms=parseDecimal(campos[12]) if campos[12] else None,
             cest=campos[13] if campos[13] else None,
+            empresa_id=empresa_id,
+            periodo=periodo,
             ativo=True
         )
         db.add(registro)

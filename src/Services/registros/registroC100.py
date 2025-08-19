@@ -1,10 +1,10 @@
 from src.Models.c100Model import RegistroC100
 from src.Config.Database.db import SessionLocal
-from Utils.registroValidacao import parseData, parseDecimal
+from src.Utils.registroValidacao import parseData, parseDecimal
 
-#|C100|1|0||65|00|2|000009087|23250700092104000173650020000090871022312201|23072025|23072025|10,90|0|||10,90|9||||0|0||||||||
+# |C100|1|0||65|00|2|000009087|23250700092104000173650020000090871022312201|23072025|23072025|10,90|0|||10,90|9||||0|0||||||||
 
-def processarC100(campos):
+def processarC100(campos, empresa_id: int, periodo: str):
     if len(campos) < 30:
         print(f"⚠️ Linha REG C100 malformada: {campos}")
         return
@@ -41,6 +41,8 @@ def processarC100(campos):
             vl_cofins=parseDecimal(campos[27]),
             vl_pis_st=parseDecimal(campos[28]),
             vl_cofins_st=parseDecimal(campos[29]),
+            empresa_id=empresa_id,
+            periodo=periodo,
             ativo=True
         )
         db.add(registro)

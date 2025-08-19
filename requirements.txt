@@ -1,2 +1,5 @@
 flet
 aiohttp
+sqlalchemy
+python-dotenv
+pymysql

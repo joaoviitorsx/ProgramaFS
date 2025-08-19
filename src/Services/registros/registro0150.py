@@ -1,9 +1,9 @@
 from src.Models._0150Model import Registro0150
 from src.Config.Database.db import SessionLocal
 
-#|0150|3037|SEARA COMERCIO DE ALIMENTOS LTDA|1058|83044016007306|||2301000||RODOVIA BR 116|0|KM 23 SALA 2,|CAMARA|
+# |0150|3037|SEARA COMERCIO DE ALIMENTOS LTDA|1058|83044016007306|||2301000||RODOVIA BR 116|0|KM 23 SALA 2,|CAMARA|
 
-def processar0150(campos):
+def processar0150(campos, empresa_id: int, periodo: str):
     if len(campos) < 15:
         print(f"⚠️ Linha REG 0150 malformada: {campos}")
         return
@@ -25,7 +25,8 @@ def processar0150(campos):
             compl=campos[12],
             bairro=campos[13],
             uf=campos[14],
-            periodo=None,
+            empresa_id=empresa_id,
+            periodo=periodo,
             ativo=True
         )
         db.add(registro)
@@ -35,4 +36,3 @@ def processar0150(campos):
         print(f"❌ Erro ao inserir REG 0150: {e}")
     finally:
         db.close()
-        

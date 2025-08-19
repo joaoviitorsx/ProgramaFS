@@ -1,10 +1,13 @@
 from src.Models.c170Model import RegistroC170
 from src.Config.Database.db import SessionLocal
-from Utils.registroValidacao import parseDecimal
+from src.Utils.registroValidacao import parseDecimal
 
-#|C170|24|00000000007026||5,00000|UN24|666,00|2,00|0|060|1403|||||0||0|||||||||||||||||||||
+# |C170|24|00000000007026||5,00000|UN24|666,00|2,00|0|060|1403|||||0||0|||||||||||||||||||||
 
-def processarC170(campos):
+def processarC170(campos, empresa_id: int, periodo: str):
+    campos = [campo.strip() for campo in campos]
+    campos += [""] * (44 - len(campos))
+
     if len(campos) < 44:
         print(f"⚠️ Linha REG C170 malformada: {campos}")
         return
@@ -51,7 +54,7 @@ def processarC170(campos):
             cod_cta=campos[37],
             vl_abat_nt=parseDecimal(campos[38]),
             c100_id=None,
-            filial=None,
+            filial=empresa_id,         
             ind_oper=campos[39],
             cod_part=campos[40],
             num_doc=campos[41],
@@ -60,8 +63,8 @@ def processarC170(campos):
             mercado="",
             aliquota="",
             resultado="",
-            periodo=None,
-            empresa_id=None,
+            periodo=periodo,           
+            empresa_id=empresa_id,     
             ativo=True
         )
         db.add(registro)

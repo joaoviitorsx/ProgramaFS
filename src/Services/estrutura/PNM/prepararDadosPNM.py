@@ -2,35 +2,31 @@ from decimal import Decimal
 from src.Utils.registroValidacao import parseDecimal
 
 def prepararDadosPNM(registro_c170):
-    produto = registro_c170.cod_item
-    cfop = registro_c170.cfop
-    unidade = registro_c170.unid
-    quantidade = parseDecimal(registro_c170.qtd)
-    vl_item = parseDecimal(registro_c170.vl_item)
-    vl_desc = parseDecimal(registro_c170.vl_desc or 0)
+    produto = str(registro_c170.cod_item).lstrip("0")
+    cfop = registro_c170.cfop or ""
+    unidade = registro_c170.unid or "UN"
+    quantidade = parseDecimal(registro_c170.qtd or "0")
+    vl_item = parseDecimal(registro_c170.vl_item or "0")
+    vl_desc = parseDecimal(registro_c170.vl_desc or "0")
     vl_total = (vl_item - vl_desc).quantize(Decimal("0.02"))
 
-    # Cálculo das alíquotas e valores PIS/COFINS
     aliq_pis = Decimal("1.65")
     aliq_cofins = Decimal("7.60")
     valor_pis = (vl_total * aliq_pis / 100).quantize(Decimal("0.01"))
     valor_cofins = (vl_total * aliq_cofins / 100).quantize(Decimal("0.01"))
-
-    # Cálculo da diferença de arredondamento
     diferenca_arred = (vl_total - vl_item).quantize(Decimal("0.02"))
 
-    # Parâmetros padrões
     cod_ajuste = "31103020302"
     tipo_calc = "1"
-    cst_padrao = "50"
+    cst_padrao = registro_c170.cst_icms or "50"
     tributacao_icms = "3"
 
     return {
         "produto": produto,
         "cfop": cfop,
         "cfop_transferencia": "",
-        "csta": registro_c170.cst,
-        "cstb": registro_c170.cst,
+        "csta": cst_padrao,
+        "cstb": cst_padrao,
         "unidade": unidade,
         "quantidade": quantidade,
         "valor_bruto": vl_item,

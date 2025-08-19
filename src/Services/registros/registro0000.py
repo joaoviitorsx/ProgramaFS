@@ -1,10 +1,11 @@
 from src.Models._0000Model import Registro0000
 from src.Config.Database.db import SessionLocal
-from Utils.registroValidacao import parseData
+from src.Utils.registroValidacao import parseData
 
-#|0000|019|0|01072025|31072025|JM SUPERMERCADO COMERCIO DE ALIMENTOS LTDA|00092104000173||CE|068913290|2304251|||B|1|
+# Exemplo de linha REG 0000:
+# |0000|019|0|01072025|31072025|JM SUPERMERCADO COMERCIO DE ALIMENTOS LTDA|00092104000173||CE|068913290|2304251|||B|1|
 
-def processar0000(campos):
+def processar0000(campos, empresa_id: int, periodo: str):
     if len(campos) < 16:
         print(f"⚠️ Linha REG 0000 malformada: {campos}")
         return
@@ -27,8 +28,8 @@ def processar0000(campos):
             suframa=campos[13],
             ind_perfil=campos[14],
             ind_ativ=campos[15],
-            filial=None,
-            periodo=None,
+            empresa_id=empresa_id,      
+            periodo=periodo,        
             ativo=True
         )
         db.add(registro)

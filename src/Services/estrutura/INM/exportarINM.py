@@ -1,6 +1,6 @@
 from src.Config.Database.db import SessionLocal
 from src.Models.c190Model import RegistroC190
-from src.Models.empresaModel import EmpresaModel
+from src.Models.empresaModel import Empresa
 from src.Services.estrutura.INM.builderLinhaINM import criarLinhaINM
 from src.Services.estrutura.INM.prepararDadosINM import prepararDadosINM
 
@@ -9,7 +9,7 @@ def exportarINM(empresa_id: int, periodo: str) -> list[str]:
     linhas = []
 
     try:
-        empresa = session.query(EmpresaModel).filter_by(id=empresa_id).first()
+        empresa = session.query(Empresa).filter_by(id=empresa_id).first()
         uf_empresa = empresa.uf if empresa else ""
 
         registros = session.query(RegistroC190).filter_by(

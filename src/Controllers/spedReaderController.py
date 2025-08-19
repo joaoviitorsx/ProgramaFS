@@ -1,4 +1,4 @@
-from src.Services.leitor.spedReaderService import leitor
+from src.Services.leitor.spedReaderService import processarSped
 from typing import List
 
 def inserirDadosSped(empresa_id: int, periodo: str, arquivos: List[str]) -> dict:
@@ -7,7 +7,7 @@ def inserirDadosSped(empresa_id: int, periodo: str, arquivos: List[str]) -> dict
             return {"success": False, "mensagem": "Nenhum arquivo informado."}
 
         for caminho_arquivo in arquivos:
-            leitor(empresa_id=empresa_id, periodo=periodo, caminho=caminho_arquivo)
+            processarSped(empresa_id, periodo, caminho_arquivo)
 
         return {
             "success": True,

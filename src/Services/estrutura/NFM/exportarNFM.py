@@ -20,7 +20,7 @@ def exportarNFM(empresa_id: int, periodo: str) -> list[str]:
             c170 = session.query(RegistroC170).filter_by(
                 empresa_id=empresa_id,
                 periodo=periodo,
-                cod_doc=c100.num_doc
+                num_doc=c100.num_doc
             ).first()
 
             participante = session.query(Registro0150).filter_by(

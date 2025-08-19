@@ -1,4 +1,4 @@
-from src.Utils.fsFormat import fmt_str, fmt_data
+from src.Utils.fsFormat import fmt_str
 
 def criarLinhaCAB(dados: dict) -> list[str]:
     return [

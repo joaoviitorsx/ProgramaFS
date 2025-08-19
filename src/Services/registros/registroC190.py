@@ -1,11 +1,11 @@
 from src.Models.c190Model import RegistroC190
 from src.Config.Database.db import SessionLocal
-from Utils.registroValidacao import parseDecimal
+from src.Utils.registroValidacao import parseDecimal
 
-#|C190|060|5405||26,97|0|0|0|0|0|0||1
+# |C190|060|5405||26,97|0|0|0|0|0|0||1
 
-def processarC190(campos):
-    if len(campos) < 15:
+def processarC190(campos, empresa_id: int, periodo: str):
+    if len(campos) < 13:
         print(f"⚠️ Linha REG C190 malformada: {campos}")
         return
 
@@ -24,8 +24,8 @@ def processarC190(campos):
             vl_red_bc=parseDecimal(campos[10]),
             vl_ipi=parseDecimal(campos[11]),
             cod_obs=campos[12],
-            empresa_id=None,
-            periodo=None,
+            empresa_id=empresa_id,
+            periodo=periodo,
             c100_id=None,
             ativo=True
         )
